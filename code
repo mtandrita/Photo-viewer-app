@@ -1,0 +1,29 @@
+from tkinter import *
+from PIL import ImageTk, Image
+import os
+def img_cycle():
+    global counter
+    img_label.config(image= img_array[counter%len(img_array)])
+    counter+=1
+counter=1
+root = Tk()
+root.title("Photo Viewer")
+root.iconbitmap("C:\\Users\\mtand\\OneDrive\\Pictures\\Screenshots\\Screenshot 2025-06-11 094233.png")
+root.geometry("600x600")
+root.configure(bg="black")
+text_label = Label(root, text="Photo Viewer",fg="white",bg="black")
+text_label.pack(pady=(10,10))
+text_label.configure(font=("calibri",24,'bold'))
+files = os.listdir("C:\\Users\\mtand\\OneDrive\\Pictures\\photo")
+img_array = []
+for file in files:
+    img = Image.open(os.path.join("C:\\Users\\mtand\\OneDrive\\Pictures\\photo",file))
+    resized_img = img.resize((500,300))
+    img_array.append(ImageTk.PhotoImage(image=resized_img))
+img_label = Label(root,image=img_array[0])
+img_label.pack(pady=(10,10))
+
+next_btn = Button(root,text="Next",fg='black',bg='white',width=28,height=2,command=img_cycle)
+next_btn.configure(font=("calibri",15,'bold'))
+next_btn.pack(pady=(10,10))
+root.mainloop()
